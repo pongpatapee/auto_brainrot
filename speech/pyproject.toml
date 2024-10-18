@@ -1,0 +1,20 @@
+[project]
+name = "speech"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "IbrahimSaeedPurdue", email = "isaeedpurdue@gmail.com"},
+]
+dependencies = [
+    "typing-extensions>=4.12.2",
+    "boto3>=1.35.39",
+    "pydantic>=2.9.2",
+    "python-dotenv>=1.0.1",
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
