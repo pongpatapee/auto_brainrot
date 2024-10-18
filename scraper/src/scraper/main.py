@@ -1,30 +1,3 @@
-import requests
-from bs4 import BeautifulSoup
-
-
-# Making a GET request
-r = requests.get(
-    "https://www.reddit.com/r/tifu/comments/1g2trss/tifu_by_using_the_bathroom_at_my_dates_house/"
-)
-
-# Parsing the HTML
-soup = BeautifulSoup(r.text, "html.parser")
-# s = soup.find("h1", class_="title")
-title_tag = soup.find("h1")
-print(title_tag.text)
-
-paragraphs = (
-    soup.find("div", class_="text-neutral-content")
-    .find("div")
-    .find("div")
-    .find_all("p")
-)
-
-for p in paragraphs:
-    print(p)
-
-print(len(paragraphs))
-
-# post_content = content_tag.text if content_tag else "N/A"
-# print(post_content)
-#
+# TODO: Maybe migrate to reddit api or github library
+# api most likely own't cost money for our usecase
+# https://www.reddit.com/r/redditdev/comments/1dh5jq2/what_does_reddit_api_cost/
