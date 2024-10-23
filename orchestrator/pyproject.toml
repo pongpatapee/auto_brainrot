@@ -1,0 +1,17 @@
+[project]
+name = "orchestrator"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "ibrahim saeed", email = "isaeedpurdue@gmail.com"},
+]
+dependencies = [
+    "apache-airflow==2.10.2",
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
