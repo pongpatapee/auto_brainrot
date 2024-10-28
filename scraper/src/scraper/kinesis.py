@@ -1,3 +1,4 @@
+import base64
 import gzip
 import json
 import sys
@@ -26,17 +27,11 @@ class KenesisStreamWriter(AbstractWriter):
 
     def compress_data(self, data: KinesisRedditData):
 
-        # TODO: Compress only the data portion
+        dict_data = data.model_dump()
+        dict_data["data"] = gzip.compress(json.dumps(dict_data["data"]).encode("utf8"))
+        dict_data["data"] = base64.b64encode(dict_data["data"]).decode("utf8")
 
-        # dict_data = data.model_dump()
-        # dict_data["data"] = gzip.compress(json.dumps(dict_data["data"]).encode("utf8"))
-
-        # compressed_data = json.dumps(dict_data)
-
-        json_data = data.model_dump_json()
-        compressed_data = gzip.compress(json_data.encode("utf-8"))
-        print(f"size of original data: {sys.getsizeof(data)}")
-        print(f"size of compressed data: {sys.getsizeof(compressed_data)}")
+        compressed_data = json.dumps(dict_data)
 
         return compressed_data
 
