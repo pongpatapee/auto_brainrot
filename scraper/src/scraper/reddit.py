@@ -38,16 +38,8 @@ class RedditScraper:
 
         submission = self.reddit.submission(url=url)
 
+        id = submission.id
         title = submission.title
         body = submission.selftext
 
-        return RedditPostContent(title=title, body=body)
-
-
-if __name__ == "__main__":
-    scraper = RedditScraper()
-    top_posts = scraper.get_top_posts_urls("cscareers")
-    print(top_posts)
-
-    content = scraper.get_post_content(top_posts[0])
-    print(content)
+        return RedditPostContent(id=id, title=title, body=body)

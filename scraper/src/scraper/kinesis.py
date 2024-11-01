@@ -52,20 +52,20 @@ class KenesisStreamWriter(AbstractWriter):
         return response
 
 
-if __name__ == "__main__":
-    writer = KenesisStreamWriter(
-        aws_session=boto3.Session(profile_name="auto_brainrot"),
-    )
+# if __name__ == "__main__":
+#     writer = KenesisStreamWriter(
+#         aws_session=boto3.Session(profile_name="auto_brainrot"),
+#     )
 
-    data = KinesisRedditData(
-        version="1.0",
-        id="ligmaballs",
-        data=RedditPostContent(
-            title="bazinga", body="your mom sees the back of my head"
-        ),
-    )
+#     data = KinesisRedditData(
+#         version="1.0",
+#         id="ligmaballs",
+#         data=RedditPostContent(
+#             title="bazinga", body="your mom sees the back of my head"
+#         ),
+#     )
 
-    response = writer.write(dst_name=AWS_KINESIS_STREAM_NAME, data=data)
+#     response = writer.write(dst_name=AWS_KINESIS_STREAM_NAME, data=data)
 
-    print("writer response:")
-    print(response)
+#     print("writer response:")
+#     print(response)

@@ -118,18 +118,18 @@ files = [
 
 [[package]]
 name = "praw"
-version = "7.7.1"
-requires_python = "~=3.7"
-summary = "PRAW, an acronym for \"Python Reddit API Wrapper\", is a Python package that allows for simple access to  Reddit's API."
+version = "7.8.1"
+requires_python = "~=3.8"
+summary = "Python Reddit API Wrapper."
 groups = ["default"]
 dependencies = [
-    "prawcore<3,>=2.1",
+    "prawcore<3,>=2.4",
     "update-checker>=0.18",
     "websocket-client>=0.54.0",
 ]
 files = [
-    {file = "praw-7.7.1-py3-none-any.whl", hash = "sha256:9ec5dc943db00c175bc6a53f4e089ce625f3fdfb27305564b616747b767d38ef"},
-    {file = "praw-7.7.1.tar.gz", hash = "sha256:f1d7eef414cafe28080dda12ed09253a095a69933d5c8132eca11d4dc8a070bf"},
+    {file = "praw-7.8.1-py3-none-any.whl", hash = "sha256:15917a81a06e20ff0aaaf1358481f4588449fa2421233040cb25e5c8202a3e2f"},
+    {file = "praw-7.8.1.tar.gz", hash = "sha256:3c5767909f71e48853eb6335fef7b50a43cbe3da728cdfb16d3be92904b0a4d8"},
 ]
 
 [[package]]

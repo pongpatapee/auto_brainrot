@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class RedditPostContent(BaseModel):
+    id: str
     title: str
     body: str
 
