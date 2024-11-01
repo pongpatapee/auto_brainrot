@@ -1,0 +1,19 @@
+[project]
+name = "orchestrator"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "ibrahim saeed", email = "isaeedpurdue@gmail.com"},
+]
+dependencies = [
+    "apache-airflow==2.10.2",
+    "scraper @ file:///${PROJECT_ROOT}/../scraper",
+    "speech @ file:///${PROJECT_ROOT}/../speech",
+]
+requires-python = ">=3.11,<3.13" # airflow can go do to ">=3.8,<3.13"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
