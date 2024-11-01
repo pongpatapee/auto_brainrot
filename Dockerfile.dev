@@ -1,0 +1,37 @@
+FROM apache/airflow:2.10.2-python3.12
+# Set Airflow UID, modify if needed to match your user ID
+ARG AIRFLOW_UID=50000
+ENV AIRFLOW_UID=${AIRFLOW_UID}
+
+USER ${AIRFLOW_UID}
+
+# Install PDM
+RUN pip install pdm
+
+# Set up the app in /app and use local code in the container.
+
+# Note Have to maintain structure because the orchestrator
+# specifies dependency of scraper and speech as relative paths.
+WORKDIR /tmp/orchestrator
+COPY ./orchestrator/pyproject.toml ./orchestrator/pdm.lock /tmp/orchestrator/
+COPY ./scraper/pyproject.toml ./scraper/pdm.lock /tmp/scraper/
+COPY ./speech/pyproject.toml ./speech/pdm.lock /tmp/speech/
+
+# Ensure /app has the correct ownership and permissions.
+USER root
+RUN sudo chmod -R 777 /tmp/orchestrator/
+RUN sudo chmod -R 777 /tmp/scraper/
+RUN sudo chmod -R 777 /tmp/speech/
+USER ${AIRFLOW_UID}
+
+# Switch to root to set up permissions
+
+
+# Export dependencies and install
+RUN pdm export -o /tmp/requirements.txt --without-hashes
+RUN pip install -r /tmp/requirements.txt
+
+# Set Airflow environment variables
+ENV AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags
+
+# docker-compose.yaml manages how the airflow service and it's dependent services starts up.
