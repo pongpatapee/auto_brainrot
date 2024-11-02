@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from inputs.tts_input import TtsInput
+from models import TtsInput
 
 
 class AbstractSpeechSynthesizer(ABC):

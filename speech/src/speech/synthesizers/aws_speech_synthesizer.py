@@ -5,7 +5,7 @@ import boto3
 from botocore.client import BaseClient
 from botocore.exceptions import BotoCoreError, ClientError
 from constants import DATA_FOLDER
-from inputs.tts_input import TtsInput
+from models import TtsInput
 from synthesizers.abstract_speech_synthesizer import AbstractSpeechSynthesizer
 from typing_extensions import override
 
@@ -38,11 +38,13 @@ class AwsSpeechSythesizer(AbstractSpeechSynthesizer):
             audio_bytes = BytesIO(audio_stream.read())
             audio_stream.close()
 
+            filename = f"{input.id}.mp3"
+
             # Here you can save it to a file or play it directly, for example:
-            with open(os.path.join(DATA_FOLDER, "output.mp3"), "wb") as file:
+            with open(os.path.join(DATA_FOLDER, filename), "wb") as file:
                 file.write(audio_bytes.getbuffer())
 
-            print("Audio content written to output.mp3")
+            print(f"Audio content written to {filename}")
 
         except (BotoCoreError, ClientError) as error:
             print(f"An error occurred: {error}")
