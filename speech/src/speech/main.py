@@ -1,28 +1,37 @@
 import os
+import time
+from pprint import pprint
 
 import boto3
-from constants import ROOT_DIR
-from dotenv import load_dotenv
-from inputs.tts_input import TtsInput
+from models import TtsInput
+from readers.kinesis import KinesisStreamReader
 from synthesizers.aws_speech_synthesizer import AwsSpeechSythesizer
 
 
 def main():
-    # loaded_at_least_one: bool = load_dotenv()
-    # if not loaded_at_least_one:
-    #     raise RuntimeError("Couldn't load env variables")
 
     synthesizer = AwsSpeechSythesizer(
         aws_session=boto3.Session(profile_name="auto_brainrot"),
-        aws_region=os.getenv("AWS_REGION"),
+        aws_region=os.getenv("AWS_REGION", "us-east-1"),
     )
 
-    tts_input = TtsInput(
-        title="Sample Title",
-        body="This is the body of the text for speech synthesis. Dan suck big peeeeeeeeen",
+    reader = KinesisStreamReader(
+        aws_session=boto3.Session(profile_name="auto_brainrot")
     )
 
-    synthesizer.text_to_speech(tts_input)
+    shard_id = "shardId-000000000000"
+    records = reader.get_records(starting_shard=shard_id, max_records=1)
+    for record in records:
+        for data in record:
+            reddit_data = reader.decompress_data(data["Data"])
+            print("Decompressed Data")
+            print(reddit_data)
+
+            tts_input = TtsInput.model_validate(reddit_data)
+
+            synthesizer.text_to_speech(tts_input)
+
+        time.sleep(2)
 
 
 if __name__ == "__main__":
