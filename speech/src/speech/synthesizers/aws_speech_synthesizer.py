@@ -4,9 +4,8 @@ from io import BytesIO
 import boto3
 from botocore.client import BaseClient
 from botocore.exceptions import BotoCoreError, ClientError
-from constants import DATA_FOLDER
-from inputs.tts_input import TtsInput
-from synthesizers.abstract_speech_synthesizer import AbstractSpeechSynthesizer
+from speech.inputs.tts_input import TtsInput
+from speech.synthesizers.abstract_speech_synthesizer import AbstractSpeechSynthesizer
 from typing_extensions import override
 
 AWS_POLLY_CLIENT_NAME = "polly"
@@ -21,7 +20,7 @@ class AwsSpeechSythesizer(AbstractSpeechSynthesizer):
         )
 
     @override
-    def text_to_speech(self, input: TtsInput):
+    def text_to_speech(self, input: TtsInput, output_path: str):
         try:
             # Call Amazon Polly to synthesize speech
             response = self.polly_client.synthesize_speech(
@@ -39,7 +38,7 @@ class AwsSpeechSythesizer(AbstractSpeechSynthesizer):
             audio_stream.close()
 
             # Here you can save it to a file or play it directly, for example:
-            with open(os.path.join(DATA_FOLDER, "output.mp3"), "wb") as file:
+            with open(output_path, "wb") as file:
                 file.write(audio_bytes.getbuffer())
 
             print("Audio content written to output.mp3")

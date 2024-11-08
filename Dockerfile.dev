@@ -22,6 +22,9 @@ USER root
 RUN sudo chmod -R 777 /tmp/orchestrator/
 RUN sudo chmod -R 777 /tmp/scraper/
 RUN sudo chmod -R 777 /tmp/speech/
+
+RUN sudo mkdir /root/.aws/
+RUN sudo chmod -R 777 /root/.aws/
 USER ${AIRFLOW_UID}
 
 # Switch to root to set up permissions
@@ -30,6 +33,9 @@ USER ${AIRFLOW_UID}
 # Export dependencies and install
 RUN pdm export -o /tmp/requirements.txt --without-hashes
 RUN pip install -r /tmp/requirements.txt
+
+# To make sure the outputs go into the data folder in orchestrator
+WORKDIR /app/orchestrator
 
 # Set Airflow environment variables
 ENV AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags

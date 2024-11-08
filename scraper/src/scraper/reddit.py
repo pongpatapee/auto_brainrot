@@ -3,7 +3,7 @@ from typing import List, Literal
 
 import praw
 from dotenv import load_dotenv
-from models import RedditPostContent
+from scraper.models import RedditPostContent
 
 load_dotenv()
 

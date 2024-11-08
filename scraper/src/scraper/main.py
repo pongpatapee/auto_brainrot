@@ -2,9 +2,9 @@ import logging
 import logging.handlers
 
 import boto3
-from kinesis import KenesisStreamWriter
-from models import KinesisRedditData
-from reddit import RedditScraper
+from scraper.writers import KinesisStreamWriter
+from scraper.models import KinesisRedditData
+from scraper.reddit import RedditScraper
 
 AWS_KINESIS_STREAM_NAME = "autoBrainrotDataStream"
 
@@ -25,8 +25,7 @@ logger.addHandler(file_handler)
 
 
 if __name__ == "__main__":
-
-    writer = KenesisStreamWriter(
+    writer = KinesisStreamWriter(
         aws_session=boto3.Session(profile_name="auto_brainrot"),
     )
     scraper = RedditScraper()
